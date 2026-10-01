@@ -41,6 +41,13 @@ def _gemini_json(prompt, model=None):
     import json
 
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
+
+    if not api_key:
+        try:
+            api_key = st.secrets["GEMINI_API_KEY"].strip()
+        except Exception:
+            api_key = ""
+
     if not api_key:
         return {"error": "GEMINI_API_KEY is not set."}
 
